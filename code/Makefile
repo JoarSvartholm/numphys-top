@@ -1,8 +1,8 @@
 CC = gcc
 LOADLIBES =  -L/usr/local/lib -lgsl -lgslcblas -lm
 CFLAGS = -g -I/usr/local/include
-OBJS = integration.o
-DEPS = integration.h #$(LIBODE) # Makefile
+OBJS = integration.o top.o
+DEPS = integration.h top.h#$(LIBODE) # Makefile
 
 PIC = -fPIC
 
