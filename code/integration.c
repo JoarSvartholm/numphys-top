@@ -16,7 +16,7 @@ double mass_integrand(double x,void *params){
 double com_integrand(double x,void *params){
   parameters pars = *(parameters *)params;
 
-  return pars.rho(x)*pars.y(x)*pars.y(x)*x;
+  return pars.rho(x)*M_PI*pars.y(x)*pars.y(x)*x;
 }
 
 double I3_integrand(double x,void *params){

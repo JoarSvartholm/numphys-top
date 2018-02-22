@@ -1,8 +1,8 @@
 CC = gcc
 LOADLIBES =  -L/usr/local/lib -lgsl -lgslcblas -lm
 CFLAGS = -g -I/usr/local/include
-OBJS = integration.o top.o
-DEPS = integration.h top.h#$(LIBODE) # Makefile
+OBJS = integration.o top.o converted_tops.o
+DEPS = integration.h top.h converted_tops.h#$(LIBODE) # Makefile
 
 PIC = -fPIC
 
@@ -11,7 +11,7 @@ PIC = -fPIC
 
 
 inertia: inertia.o $(OBJS)
-	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^   -o $@ $(LOADLIBES)
+	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^ -o $@ $(LOADLIBES)
 
 %:%.o $(OBJS)#	 $(DEPS)
 	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^   -o $@ $(LOADLIBES)
