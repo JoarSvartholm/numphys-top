@@ -13,6 +13,9 @@ PIC = -fPIC
 inertia: inertia.o $(OBJS)
 	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^ -o $@ $(LOADLIBES)
 
+lagrange: lagrange.o $(OBJS)
+	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^ -o $@ $(LOADLIBES)
+
 %:%.o $(OBJS)#	 $(DEPS)
 	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^   -o $@ $(LOADLIBES)
 

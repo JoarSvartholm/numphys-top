@@ -1,0 +1,76 @@
+\section{Introduction}
+
+In this report a spinning top will be simulated using two different formulations. First some properties of the spinnings tops will be calculated followed by simulations using Lagrange's and Hamilton's formulation of the equetions of motion. Each section will start with an instruction on how to compile and run each program in order to obtain the presented results. All code is found in the folder \newline\verb|/home/josv0150/Documents/numPhys/numphys-top/code| and the instructions assume that this is the current folder. All plotting is done with the corresponding plotscript which is written in python 3 with no guarantee of compatibility with other version. No instruction of usage is given for these.
+
+\section{Moment of Inertia}
+
+In order to compile the program simply write \verb|make| in the code folder. The following syntax is used in order to produce results: \verb|./inertia N [add]|. Using an empty set or parameters will run a default test script on unit top shapes. Adding parameter $N = 1,2,3,4$ gives you the Mass, COM, and moment of inertia for top $N$ in the top.h file. Using $N=5$ and the additional parameter \verb|add|$ = 1,2,3,4$ gives you 50 function evaluations from 0 to 5 of the \verb|top_y| function in the top.h file. Using $N=6$ and the additional parameter \verb|add|$ = 1,2,3,4$ gives you 50 function evaluations from 0 to 5 of the \verb|top_rho| function in the top.h file. Using $N=7$ gives an error analysis for the computation of $I_1$ with respect to the relative and absolute error in the integration. Using $N=8$ the program returns a comparison in error between the algorithms \verb|QAG|, \verb|QAGS| and \verb|QAGP| for the computation of $I_1$ for top 1.
+
+The properties of the four tops are tabulated in Tab. \ref{tab:inertia}.
+
+In order to compare these values with the analytical values top 1 and its density is plotted in Fig. \ref{fig:top1}-\ref{fig:rho1}. The analytic formula for the shape could thus be found as
+
+\begin{equation}
+  \label{eq:y1}
+  y(x) = \left\{ \begin{array}{lr}
+    0.5 x, \quad x \le 3 \\
+    0.3, \quad x > 3
+  \end{array} \right.
+\end{equation}
+
+and the density is constant $2.5[g/cm^3]$.
+
+\begin{table}[H]
+  \centering
+  \caption{title}
+  \label{tab:inertia}
+  \begin{tabular}{l|l|l|l|l}
+    Top number & M [g]& l[cm] & $I_3 [g\cdot cm^2]$ & $I_1 [g\cdot cm^2]$ \\ \hline
+    1 & 19.085175 & 2.379630 &  11.991852 & 124.51259 \\
+    2 & 20.216149 & 2.485664 & 9.673276 & 142.491471 \\
+    3 & 20.214285 & 2.952093 & 9.898767 & 189.776385 \\
+    4 & 20.420174 & 2.023939 & 9.544517 & 96.631471 \\
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \caption{Analytic values for Top 1.}
+  \label{tab:inertia}
+  \begin{tabular}{l|l|l|l}
+ M [g]& l[cm] & $I_3 [g\cdot cm^2]$ & $I_1 [g\cdot cm^2]$ \\ \hline
+19.085175370557995 & 2.3796296296296293 &  11.99185185783394 & 124.51250878559192 \\
+  \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/top1}
+  \caption{Profile of Top 1.}
+  \label{fig:top1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/rho1}
+  \caption{Profile of $\rho$ for Top 1.}
+  \label{fig:rho1}
+\end{figure}
+
+In order to see how the numerical method depend on the relative and absolute error given to the GSL function these parameters was changed and the moment of inertia $I_1$ was recomputed for different tolerances. The error was then compared to the estimated error obtained by the algorithm. This is shown in Fig. \ref{fig:relErr}-\ref{fig:absErr}. Absolute error of $10^{-10}$ is user for the relative error analysis and relative error of $10^{-15}$ is used for the absolute error analysis.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/relErr}
+  \caption{Analytic and estimated error versus the relative error tolerance.}
+  \label{fig:relErr}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figs/absErr}
+  \caption{Analytic and estimated error versus the absolute error tolerance.}
+  \label{fig:absErr}
+\end{figure}
+
+When comparing the algorithms \verb|QAG|, \verb|QAGS| and \verb|QAGP| with respect to the relative error compared to the analytic solution one can see that \verb|QAGP| gives an exact result. This is because the function is simple if one knows how to divide the integral and the algorithm can approximate it with no error. \verb|QAG| gives a relative error of $1.906 \cdot 10^{-14}$ and \verb|QAGS| gives an error of $4.565 \cdot 10^{-15}$ which makes it slightly better.

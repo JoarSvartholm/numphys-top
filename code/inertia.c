@@ -75,7 +75,34 @@ int main(int argc, char const *argv[]) {
     for(int i = 0;i<=50;i++){
       printf("%f\n", top_rho(atoi(argv[2]),(double)i/10.));
     }
-  }else printf("Not a valid test case\n" );
+  }else if(atoi(argv[1])==7){
+
+    double ana = 124.51250878559192;
+    double error;
+  for(int i = 0;i<15;i++){
+
+    I1 = integrate_error(4,rho_top1,y_top1,0,5,1e-2*pow(2,-i*2),1e-15,&error);
+    printf("%.20f %.20f\n",(ana-I1) , error);
+  }
+
+  for(int i=0;i<15;i++){
+
+    I1 = integrate_error(4,rho_top1,y_top1,0,5,1e-10,1e-2*pow(2,-i*3),&error);
+    printf("%.20f %.20f\n",(ana-I1) , error);
+
+  }
+
+}else if(atoi(argv[1])==8){
+  double ana = 124.51250878559192;
+
+  I1 = integrate_qag(4,rho_top1,y_top1,0,5);
+  double I2 = integrate_qagp(4,rho_top1,y_top1,0,5);
+  I3 = integrate(4,rho_top1,y_top1,0,5);
+
+  printf("QAG gives error: %e\n",(I1-ana)/ana );
+  printf("QAGP gives error: %e\n",(I2-ana)/ana );
+  printf("QAGS gives error: %e\n",(I3-ana)/ana );
+}else printf("Not a valid test case\n" );
 
   return 0;
 }
