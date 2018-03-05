@@ -1,0 +1,162 @@
+\section{Hamilton's equations of motion}
+
+The program used for this section is called \verb|hamilton| and works in similay fashion as the one used in previous section. The compilation is done by typing \verb|make hamilton|. The hamiltonian of the spinning top can be rewritten as
+
+\begin{equation}
+  \label{eq:hamilton}
+  H = \frac{p_{\theta}^{2}}{2I_1} + \frac{(p_\phi - p_\psi \cos \theta)^2}{2I_1 \sin^2 \theta} + \frac{p_{\psi}^2}{2I_3} + MgL\cos \theta
+\end{equation}
+
+and the corresponding equations of motions are
+
+\begin{subequations}
+  \begin{align}
+    \dot{\theta} &= \frac{p_\theta}{I_1} \\
+    \dot{\phi} &= \frac{p_\phi - p_\psi \cos \theta}{I_1 \sin^2 \theta} \\
+    \dot{\psi} &= -\cos \theta \frac{p_\phi - p_\psi \cos \theta}{I_1 \sin^2 \theta} + \frac{p_\psi}{I_3} \\
+  \dot{p_\theta} &= -\frac{1}{I_1}\{ p_\psi \frac{(p_\phi-p_\psi \cos \theta)}{\sin \theta}  -  \frac{(p_\phi-p_\psi \cos \theta)^2}{\tan \theta \sin^2 \theta}  \} + Mgl \sin \theta
+  \end{align}
+\end{subequations}
+
+and the constants of motion are
+
+\begin{subequations}
+  \begin{equation}
+    p_\phi = \textnormal{const.}
+  \end{equation}
+  \begin{equation}
+    p_\psi = \textnormal{const.}
+  \end{equation}
+\end{subequations}
+
+The jacobian of this system is found to be
+
+\begin{equation*}
+  \m J = \begin{bmatrix}
+    0 & 0 & 0 & \frac{1}{I_1} \\
+    b_1 & 0 & 0 & 0 \\
+    c_1 & 0 & 0& 0 \\
+    d_1 & 0 & 0 & 0
+   \end{bmatrix}
+\end{equation*}
+
+where
+\begin{subequations}
+  \begin{align}
+  b_1 &= \frac{p_\phi}{I_1 \sin \theta} - \frac{2}{I_1 \tan \theta \sin^2 \theta} \left( p_\phi - p_\psi \cos \theta \right) \\
+  c_1 &= \frac{p_\phi - p_\psi}{I_1 \sin^3 \theta} + \frac{1}{I_1 \tan^2 \theta \sin \theta}\left(p_\phi -p_\psi \cos \theta \right) - \frac{p_\psi}{I_1 \tan \theta} \\
+  d_1 &= Mgl\cos \theta -  \frac{p_\psi(p_\psi-p_\phi \cos \theta)}{I_1 \sin^2 \theta} + \\ &\quad \frac{1}{I_1}\bigg( 2p_\psi \frac{p_\phi - p_\psi \cos \theta}{\tan \theta \sin \theta} - \frac{(p_\phi - p_\psi)^2}{\sin^4 \theta} - 2\frac{(p_\phi - p_\psi \cos \theta)^2}{\tan^2 \theta \sin^2 \theta}\bigg)  \end{align}
+\end{subequations}
+
+Solving these equations for the four tops between $t=0$ and $t=5$ using the same initial conditions as in previous case gives Fig. \ref{fig:ham-motion-Top1}-\ref{fig:ham-motion-Top4}.
+
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-theta-1}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-phi-1}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-psi-1}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-pth-1}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-const-1}
+    \caption{}
+    \label{fig:hamE1}
+  \end{subfigure}
+  \caption{Hamiltonian dynamics of Top 1}
+  \label{fig:ham-motion-Top1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-theta-2}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-phi-2}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-psi-2}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-pth-2}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-const-2}
+    \caption{}
+    \label{fig:hamE2}
+  \end{subfigure}
+  \caption{Hamiltonian dynamics of Top 2}
+  \label{fig:ham-motion-Top2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-theta-3}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-phi-3}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-psi-3}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-pth-3}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-const-3}
+    \caption{}
+    \label{fig:hamE3}
+  \end{subfigure}
+  \caption{Hamiltonian dynamics of Top 3}
+  \label{fig:ham-motion-Top3}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-theta-4}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-phi-4}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-psi-4}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-pth-4}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/ham-const-4}
+    \caption{}
+    \label{fig:hamE4}
+  \end{subfigure}
+  \caption{Hamiltonian dynamics of Top 4}
+  \label{fig:ham-motion-Top4}
+\end{figure}
+
+Reversing time for top 1 gives the following error $\{\theta,\phi,\psi,p_\theta\} = \{7.48 \cdot 10^{-8},0,0,0.000306\}$. When comparing the two methods one can say in this case that the complexity of the equations themselves are quite similar. The main difference is that for the Hamiltonian approach only four equations need to solved. This difference isn't much in this case but would be a lot larger if an implicit method of solving the system was used, which need an implemented jacobian. When comparing the jacobians the one for the hamiltonian is smaller and consists of only 4 non-zero elements. Also in means of energy conservation the hamiltonian approach is better. Looking at the figures the total energy drifts on the order of $10^{-13}$ but the hamiltonian drifts on the order of $10^{-14}$ and is thus more stable. Even though it seems like the Hamiltonian approach is better in many ways one must still note that a lot more work is needed in order to obtain a system to solve. It is not always so easy to find the generalized momenta and a Hamiltonian depending on these. If one can do that however, this method seem to be better.

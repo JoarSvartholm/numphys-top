@@ -1,0 +1,222 @@
+\section{Lagrange's Equations of motion}
+
+In order to compile the program used in section; run \verb|make lagrange| and run the program by the command \verb|./lagrange|. This will give you a long(!) table of values where the rows correspond to the computation at each time step. For more information, look at the import procedure used in \verb|plotLagrange.py|.
+
+The lagrange equations of motion for a spinning top gives the following system of first order ODEs to solve:
+
+\begin{equation}
+  \label{eq:lagrange}
+  \begin{split}
+    \frac{d \theta}{d t} &= x \\
+    \frac{d \varphi}{d t} &= y \\
+    \frac{d \psi}{d t} &= z \\
+    \frac{d x}{d t} &= \frac{Mgl}{I_1}\sin \theta + y^2 \sin \theta \cos \theta - \frac{I_3}{I_1}(z + y\cos \theta)y\sin \theta \\
+    \frac{d y}{d t} &= \frac{I_3}{I_1}( \frac{yx\cos \theta}{\sin \theta} + \frac{xz}{\sin \theta} ) - 2xy\tan^{-1} \theta \\
+    \frac{d z}{d t} &= yx\sin \theta + 2xy \frac{\cos^2 \theta}{\sin \theta} - \frac{I_3}{I_1}( \frac{xy \cos^2 \theta}{\sin \theta} + xz\tan^{-1} \theta ) \\
+  \end{split}
+\end{equation}
+
+for the dependent variables ${\theta,\varphi,\psi,x,y,z}$. The Jacobian matrix for this system will be
+
+\begin{equation}
+  \label{eq:lagJac}
+  \m J =
+  \begin{bmatrix}
+  \m 0 & \m I_3 \\
+  \m A & \m B
+  \end{bmatrix}
+\end{equation}
+
+where $\m I_3$ is the identity matrix, $\m A$ has the non-zero components
+
+\begin{equation*}
+  \begin{split}
+    A_{11} &= \frac{Mgl}{I_1}\cos \theta + y^2 \cos(2\theta) - \frac{I_3 y}{I_1}(z\cos \theta + y \cos(2\theta)) \\
+    A_{21} &= -\frac{I_3}{I_1}(\frac{xy}{\sin^2 \theta} + \frac{xz \cos \theta}{\sin^2 \theta}) -\frac{2xy}{\sin^2 \theta} \\
+    A_{31} &= xy\cos \theta - 2xy(\frac{\cos \theta}{\sin^2 \theta} + \cos \theta) + \frac{I_3}{I_1}(xy(\frac{\cos \theta}{\sin^2 \theta} + \cos \theta)+ \frac{xz}{\sin^2 \theta} )
+  \end{split}
+\end{equation*}
+
+and
+
+\begin{equation*}
+\begin{split}
+  B_{11} &= 0 \\
+  B_{12} &= y \sin(2\theta) - \frac{I_3}{I_1}(z\sin \theta + y \sin(2\theta)) \\
+  B_{13} &= -\frac{I_3}{I_1}y\sin \theta \\
+  B_{21} &= \frac{I_3}{I_1}(\frac{y\cos \theta}{\sin \theta} + \frac{z}{\sin \theta}) - 2y\tan^{-1}\theta \\
+  B_{22} &= \frac{I_3 x\cos \theta}{I_1 \sin \theta} - 2x \tan^{-1} \theta \\
+  B_{23} &= \frac{I_3 x}{I_1 \sin \theta} \\
+  B_{31} &= y\sin \theta + 2y \frac{\cos^2 \theta}{\sin \theta} - \frac{I_3}{I_1}( \frac{y \cos^2 \theta}{\sin \theta} + z\tan^{-1} \theta ) \\
+  B_{32} &= x \sin \theta + 2x \frac{\cos^2 \theta}{\sin \theta} - \frac{I_3 x \cos^2 \theta}{I_1 \sin \theta} \\
+  B_{33} &= \frac{I_3 x}{I_1 \tan \theta}
+\end{split}
+\end{equation*}
+
+Simulating this using \verb|rkf45| from $t=0$ to $t=5$ using the initial values $\theta = 10^\circ$, $\dot{\varphi} = 66 $revolutions/s and the rest are zero gives the progression of the angles shown in Fig. \ref{fig:motion-Top1}-\ref{fig:motion-Top4} for the different tops. The motion seem to be that the top is spinning and precessing around around the z-axis. It also looks like it is ''wobbling'' since $\theta$ is not completely constant. This makes the procession to be nonconstant. The wobble seem to brake the movement of $\phi$ which is why $\phi$ has a sinusoidal pattern as it is increasing.
+
+
+In order to validate the results one can look at the constants of motion. That is, the total energy in the system and Eq. (18) and Eq. (20) from the lab specification. These are shown in Fig. \ref{fig:lagE1}.
+
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-theta-1}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-phi-1}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-psi-1}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-const-1}
+    \caption{}
+    \label{fig:lagE1}
+  \end{subfigure}
+  \caption{Lagrange motion of top 1}
+  \label{fig:motion-Top1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-thetadot-1}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-phidot-1}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-psidot-1}
+    \caption{}
+  \end{subfigure}
+  \caption{Angular velocities for top 1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-theta-2}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-phi-2}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-psi-2}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-const-2}
+    \caption{}
+    \label{fig:lagE2}
+  \end{subfigure}
+  \caption{Lagrange motion of top 2}
+  \label{fig:motion-Top2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-thetadot-2}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-phidot-2}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-psidot-2}
+    \caption{}
+  \end{subfigure}
+  \caption{Angular velocities for top 2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-theta-3}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-phi-3}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-psi-3}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-const-3}
+    \caption{}
+    \label{fig:lagE3}
+  \end{subfigure}
+  \caption{Lagrange motion of top 3}
+  \label{fig:motion-Top3}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-thetadot-3}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-phidot-3}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-psidot-3}
+    \caption{}
+  \end{subfigure}
+  \caption{Angular velocities for top 3}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-theta-4}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-phi-4}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-psi-4}
+    \caption{}
+    \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{../spinning-top/figs/lag-const-4}
+    \caption{}
+    \label{fig:lagE4}
+  \end{subfigure}
+  \caption{Lagrange motion of top 4}
+  \label{fig:motion-Top4}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-thetadot-4}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-phidot-4}
+    \caption{}
+  \end{subfigure}
+  \begin{subfigure}{0.49\textwidth}
+    \includegraphics[width=\textwidth]{figs/lag-psidot-4}
+    \caption{}
+  \end{subfigure}
+  \caption{Angular velocities for top 4}
+\end{figure}
+
+Another way of checking the simulation is by reversing time and using the final results as starting conditions. The error between the obtained values and initial values was found for top 1 to be $\{\theta,\varphi,\psi,\dot{\theta},\dot{\varphi},\dot{\psi}\}=\{7.48\cdot 10^{-8},0,10^{-6},0,3\cdot 10^{-6},2.72\cdot 10^{-6}\}$.

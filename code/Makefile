@@ -16,6 +16,9 @@ inertia: inertia.o $(OBJS)
 lagrange: lagrange.o $(OBJS)
 	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^ -o $@ $(LOADLIBES)
 
+hamilton: hamilton.o $(OBJS)
+	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^ -o $@ $(LOADLIBES)
+
 %:%.o $(OBJS)#	 $(DEPS)
 	$(CC) $(CFLAGS)  $(PIC) -Wall $(INCLUDE)  $^   -o $@ $(LOADLIBES)
 
