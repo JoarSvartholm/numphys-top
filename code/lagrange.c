@@ -12,7 +12,7 @@ typedef struct{
 int func(double t, const double y[],double dydt[], void *params){
   (void)(t);
   parameters pars = *(parameters *)params;
-  double g = 9.82;
+  double g = 982.;
 
   dydt[0] = y[3];
   dydt[1] = y[4];
@@ -55,12 +55,14 @@ if(atoi(argv[1])==1){
   pars.I1 = integrate(4,rho_top4,y_top4,0,5);
 }else {fprintf(stderr, "Wrong input parameter\n" ); exit(1);}
 
+  double g = 982.;
   gsl_odeiv2_system sys = {func,jac,6,&pars};
 
   gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new(&sys,gsl_odeiv2_step_rkf45,h,epsabs,epsrel);
 
+  double th0 = 10.*M_PI/180.;
   double t0=0.,t1=5.;
-  double y[6] = {0.1745329252, 0, 0, 0, 0, 414.69023028};
+  double y[6] = {th0, 0, 0, 0, 0, 66.*2.*M_PI};
   //double y[6] = {0.175078, 0.357448, 1658.408940, 0.014379, 0.124736, 414.567401};
 
   for(double ti=t0;ti<=t1;ti+=h){
@@ -73,7 +75,7 @@ if(atoi(argv[1])==1){
     }
 
     double K = pars.I1*0.5*(y[3]*y[3]+y[4]*y[4]*sin(y[0])*sin(y[0])) + pars.I3*0.5*(y[5]+y[4]*cos(y[0]))*(y[5]+y[4]*cos(y[0]));
-    double V = pars.Ml*9.82*cos(y[0]);
+    double V = pars.Ml*g*cos(y[0]);
 
     double C1 = pars.I1*y[4]*sin(y[0])*sin(y[0]) + pars.I3*cos(y[0])*(y[5]+y[4]*cos(y[0]));
     double C2 = y[5] + y[4]*cos(y[0]);

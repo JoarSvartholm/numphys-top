@@ -12,7 +12,7 @@ typedef struct{
 int func(double t, const double y[],double dydt[], void *params){
   (void)(t);
   parameters pars = *(parameters *)params;
-  double g = 9.82;
+  double g = 982.;
     double pphi = pars.I3*414.69023028*cos(0.1745329252);
     double ppsi = pars.I3*414.69023028;
 
@@ -55,6 +55,7 @@ int main(int argc, char const *argv[]) {
     pars.I1 = integrate(4,rho_top4,y_top4,0,5);
   }else {fprintf(stderr, "Wrong input parameter\n" ); exit(1);}
 
+  double g = 982.;
   gsl_odeiv2_system sys = {func,jac,4,&pars};
 
   gsl_odeiv2_driver *d = gsl_odeiv2_driver_alloc_y_new(&sys,gsl_odeiv2_step_rkf45,h,epsabs,epsrel);
@@ -74,7 +75,7 @@ int main(int argc, char const *argv[]) {
 
     double pphi = pars.I3*414.69023028*cos(0.1745329252);
     double ppsi = pars.I3*414.69023028;
-    double H = y[3]*y[3]*0.5/pars.I1 + (pphi-ppsi*cos(y[0]))*(pphi-ppsi*cos(y[0]))*0.5/(pars.I1*sin(y[0])*sin(y[0])) + ppsi*ppsi*0.5/pars.I3 + pars.Ml*9.82*cos(y[0]);
+    double H = y[3]*y[3]*0.5/pars.I1 + (pphi-ppsi*cos(y[0]))*(pphi-ppsi*cos(y[0]))*0.5/(pars.I1*sin(y[0])*sin(y[0])) + ppsi*ppsi*0.5/pars.I3 + pars.Ml*g*cos(y[0]);
     printf("%e %e %e %e %e %.20e\n", t0, y[0], y[1], y[2], y[3], H );
   }
 

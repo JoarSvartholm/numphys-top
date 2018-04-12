@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-savePlots = 1
-showPlots = 0
+savePlots = 0
+showPlots = 1
 
 t1,theta1,phi1,psi1,x1,y1,z1,K1,V1,E1,C11,C21= np.genfromtxt("../data/lagrange1fwd.dat",unpack=True)
 t2,theta2,phi2,psi2,x2,y2,z2,K2,V2,E2,C12,C22= np.genfromtxt("../data/lagrange2fwd.dat",unpack=True)
@@ -16,6 +16,9 @@ print()
 for i in range(len(t1)):
     theta1[i] -= np.floor(theta1[i]/np.pi)*np.pi
     phi1[i] -= np.floor(phi1[i]/(2*np.pi))*2*np.pi
+    phi2[i] -= np.floor(phi2[i]/(2*np.pi))*2*np.pi
+    phi3[i] -= np.floor(phi3[i]/(2*np.pi))*2*np.pi
+    phi4[i] -= np.floor(phi4[i]/(2*np.pi))*2*np.pi
     data1[3,i] -= np.floor(data1[3,i]/(2*np.pi))*2*np.pi
     data2[3,i] -= np.floor(data2[3,i]/(2*np.pi))*2*np.pi
     data3[3,i] -= np.floor(data3[3,i]/(2*np.pi))*2*np.pi

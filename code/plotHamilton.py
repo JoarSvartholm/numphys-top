@@ -16,6 +16,9 @@ print()
 for i in range(len(t1)):
     theta1[i] -= np.floor(theta1[i]/np.pi)*np.pi
     phi1[i] -= np.floor(phi1[i]/(2*np.pi))*2*np.pi
+    phi2[i] -= np.floor(phi2[i]/(2*np.pi))*2*np.pi
+    phi3[i] -= np.floor(phi3[i]/(2*np.pi))*2*np.pi
+    phi4[i] -= np.floor(phi4[i]/(2*np.pi))*2*np.pi
     data1[3,i] -= np.floor(data1[3,i]/(2*np.pi))*2*np.pi
     data2[3,i] -= np.floor(data2[3,i]/(2*np.pi))*2*np.pi
     data3[3,i] -= np.floor(data3[3,i]/(2*np.pi))*2*np.pi
